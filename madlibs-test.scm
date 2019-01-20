@@ -40,4 +40,15 @@
          (get-output-string out)
          "Our favorite language is Ruby. We think Ruby is better than Emerald"))))
 
+(let ((in (open-input-string "soup\nhands\nshoes"))
+      (out (open-output-string))
+      (template (ml/read-file "templates/3.madlibs")))
+  (begin
+    (ml/run template in out)
+    (test-assert
+      "3.madlibs"
+       (string-contains
+         (get-output-string out)
+         "I had a soup sandwich for lunch today. It dripped all over my hands and shoes."))))
+
 (test-exit)
