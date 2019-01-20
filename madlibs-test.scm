@@ -25,4 +25,16 @@
          (get-output-string out)
          "Our favorite language is Ruby."))))
 
+(let ((in (open-input-string "Ruby\nEmerald"))
+      (out (open-output-string))
+      (template (ml/read-file "templates/2.madlibs")))
+  (begin
+    (ml/run template in out)
+    (print (get-output-string out))
+    (test-assert
+      "2.madlibs"
+       (string-contains
+         (get-output-string out)
+         "Our favorite language is Ruby. We think it is better than Emerald"))))
+
 (test-exit)
