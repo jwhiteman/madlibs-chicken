@@ -3,16 +3,20 @@
 (load "madlibs.scm")
 (import madlibs)
 
+(load "lib/squish.scm")
+
 (import
   (chicken io) ;; read-string
-  (only srfi-13 string-contains))
+  (only srfi-13 string-contains)
+  squish)
 
 (define ml/read-file
   (lambda (filename)
-    (call-with-input-file
-      filename
-      (lambda (port)
-        (read-string #f port)))))
+    (squish
+      (call-with-input-file
+        filename
+        (lambda (port)
+          (read-string #f port))))))
 
 (let ((in (open-input-string "Ruby"))
       (out (open-output-string))
@@ -30,11 +34,10 @@
       (template (ml/read-file "templates/2.madlibs")))
   (begin
     (ml/run template in out)
-    (print (get-output-string out))
     (test-assert
       "2.madlibs"
        (string-contains
          (get-output-string out)
-         "Our favorite language is Ruby. We think it is better than Emerald"))))
+         "Our favorite language is Ruby. We think Ruby is better than Emerald"))))
 
 (test-exit)
