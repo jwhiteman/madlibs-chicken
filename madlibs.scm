@@ -15,7 +15,10 @@
 
   (define ml/replace-each
     (lambda (match table in out)
-      "Ruby"))
+      (let ((cached-value (hash-table-ref/default table match #f)))
+        (if cached-value
+          cached-value
+          "Ruby"))))
 
   (define ml/replace-all
     (lambda (template table in out)
