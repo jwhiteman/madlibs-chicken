@@ -1,8 +1,7 @@
 (module squish (squish)
   (import scheme)
   (import
-    (only srfi-13 string-trim-both)
-    (only (chicken irregex) irregex-replace/all irregex-match-substring)
+    (only (chicken irregex) irregex-replace/all)
     (chicken base))
 
   (define squish
