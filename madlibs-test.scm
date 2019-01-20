@@ -7,12 +7,16 @@
   (chicken io) ;; read-string
   (only srfi-13 string-contains))
 
+(define ml/read-file
+  (lambda (filename)
+    (call-with-input-file
+      filename
+      (lambda (port)
+        (read-string #f port)))))
+
 (let ((in (open-input-string "Ruby"))
       (out (open-output-string))
-      (template (call-with-input-file
-                  "templates/1.madlibs"
-                  (lambda (port)
-                    (read-string #f port)))))
+      (template (ml/read-file "templates/1.madlibs")))
   (begin
     (run template in out)
     (test-assert
