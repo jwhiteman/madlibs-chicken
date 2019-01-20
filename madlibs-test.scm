@@ -18,7 +18,7 @@
       (out (open-output-string))
       (template (ml/read-file "templates/1.madlibs")))
   (begin
-    (run template in out)
+    (ml/run template in out)
     (test-assert
       "1.madlibs"
        (string-contains

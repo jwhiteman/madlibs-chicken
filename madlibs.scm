@@ -2,7 +2,7 @@
 ;; http://rubyquiz.com/quiz28.html
 ;; Author: Jim Whiteman <jimtron9000@gmail.com>
 
-(module madlibs (run)
+(module madlibs (ml/run)
   (import scheme)
   (import
     (only srfi-13 string-trim-both)
@@ -13,7 +13,7 @@
     (only (chicken string) string-split)
     (only (chicken format) fprintf))
 
-  (define run
+  (define ml/run
     (lambda (template #!optional (in (current-input-port))
                                  (out (current-output-port)))
       (let ((table (make-hash-table)))
