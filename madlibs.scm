@@ -13,17 +13,21 @@
     (only (chicken string) string-split)
     (only (chicken format) fprintf))
 
+  (define ml/replace
+    (lambda (template table in out)
+      (irregex-replace/all
+        "\\(\\(([^)]*)\\)\\)"
+        template
+        (lambda (m)
+          (let ((match (irregex-match-substring m 1)))
+            "Ruby")))))
+
   (define ml/run
     (lambda (template #!optional (in (current-input-port))
                                  (out (current-output-port)))
       (let ((table (make-hash-table)))
         (write-string
-          (irregex-replace/all
-            "\\(\\(([^)]*)\\)\\)"
-            template
-            (lambda (m)
-              (let ((match (irregex-match-substring m 1)))
-                "Ruby")))
+          (ml/replace template table in out)
           #f
           out))))
 )
