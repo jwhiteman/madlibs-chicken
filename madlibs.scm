@@ -7,7 +7,7 @@
   (import
     (only srfi-13 string-trim-both)
     srfi-69 ;; hashes
-    (only (chicken io) read-line write-line)
+    (only (chicken io) read-line write-string)
     (only (chicken process-context) command-line-arguments)
     (only (chicken irregex) irregex-replace/all irregex-match-substring)
     (only (chicken string) string-split)
@@ -16,6 +16,14 @@
   (define run
     (lambda (template #!optional (in (current-input-port))
                                  (out (current-output-port)))
-      (fprintf out "hello: ~a~%" template)))
-
+      (write-string
+        (irregex-replace/all
+          "\\(\\(([^)]*)\\)\\)"
+          template
+          (lambda (m)
+            (let ((match (irregex-match-substring m 1)))
+              "Ruby")))
+        #f
+        out)))
 )
+
