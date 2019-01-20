@@ -16,13 +16,14 @@
   (define run
     (lambda (template #!optional (in (current-input-port))
                                  (out (current-output-port)))
-      (write-string
-        (irregex-replace/all
-          "\\(\\(([^)]*)\\)\\)"
-          template
-          (lambda (m)
-            (let ((match (irregex-match-substring m 1)))
-              "Ruby")))
-        #f
-        out)))
+      (let ((table (make-hash-table)))
+        (write-string
+          (irregex-replace/all
+            "\\(\\(([^)]*)\\)\\)"
+            template
+            (lambda (m)
+              (let ((match (irregex-match-substring m 1)))
+                "Ruby")))
+          #f
+          out))))
 )
